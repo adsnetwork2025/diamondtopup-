@@ -70,6 +70,13 @@
       border: 1px solid #00cc00;
       border-radius: 10px;
     }
+
+    .amount-info {
+      font-size: 18px;
+      color: #007bff;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
@@ -92,6 +99,8 @@
   </div>
 
   <div class="section hidden" id="form-section">
+    <p class="amount-info">Selected Package: <span id="selectedAmount"></span></p>
+
     <label>Your Name:</label>
     <input type="text" id="name" placeholder="Enter your name">
 
@@ -102,8 +111,10 @@
   </div>
 
   <div class="section hidden" id="payment-section">
+    <p class="amount-info">You need to pay: <span id="payAmount"></span></p>
+
     <p><strong>Select Payment Method:</strong></p>
-    <label><input type="radio" name="payment" value="Bkash" onclick="showNumber('bkash')"> Bkash</label>
+    <label><input type="radio" name="payment" value="Bkash" onclick="showNumber('bkash')"> Bkash</label><br>
     <label><input type="radio" name="payment" value="Nagad" onclick="showNumber('nagad')"> Nagad</label>
 
     <div id="numberDisplay" class="hidden">
@@ -122,13 +133,17 @@
 
   <script>
     let selectedPackage = '';
+    let selectedAmount = '';
     const bkashNumber = "01750631170";
     const nagadNumber = "01842145643";
 
-    // Handle package button clicks
     document.querySelectorAll('.pkg-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         selectedPackage = btn.dataset.package;
+        selectedAmount = selectedPackage.split(' ')[0]; // Get ৳ amount
+        document.getElementById('selectedAmount').innerText = selectedPackage;
+        document.getElementById('payAmount').innerText = selectedAmount;
+
         document.getElementById('form-section').classList.remove('hidden');
         document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
       });
@@ -198,7 +213,7 @@ Time: ${new Date().toLocaleString()}
           success.innerHTML = `
             <div class="success">
               <h2>Success!</h2>
-              <p>Your diamond top-up request has been submitted successfully.</p>
+              <p>Your diamond top-up request for <strong>${selectedPackage}</strong> has been submitted successfully.</p>
               <p>Please wait for confirmation.</p>
             </div>`;
           success.scrollIntoView({ behavior: 'smooth' });
@@ -209,5 +224,4 @@ Time: ${new Date().toLocaleString()}
     }
   </script>
 
-</body>
-</html>
+</
