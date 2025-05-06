@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hridoy Khan - FF Diamond</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 5px;
+    }
+
+    h3 {
+      text-align: center;
+      font-weight: normal;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .section {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    button, .copy-btn {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 6px;
+      background-color: #007bff;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .payment-number {
+      font-weight: bold;
+      color: #333;
+      font-size: 16px;
+    }
+
+    .success {
+      text-align: center;
+      padding: 20px;
+      background-color: #e6ffe6;
+      border: 1px solid #00cc00;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Hridoy Khan</h1>
+  <h3>Free Fire Diamond Top Up</h3>
+
+  <div class="section" id="package-section">
+    <p><strong>Select a Package:</strong></p>
+    <button class="pkg-btn" data-package="৳45 - 50 Diamond">৳45 - 50 Diamond</button>
+    <button class="pkg-btn" data-package="৳100 - 115 Diamond">৳100 - 115 Diamond</button>
+    <button class="pkg-btn" data-package="৳180 - 240 Diamond">৳180 - 240 Diamond</button>
+    <button class="pkg-btn" data-package="৳340 - 480 Diamond">৳340 - 480 Diamond</button>
+    <button class="pkg-btn" data-package="৳365 - 505 Diamond">৳365 - 505 Diamond</button>
+    <button class="pkg-btn" data-package="৳420 - 610 Diamond">৳420 - 610 Diamond</button>
+    <button class="pkg-btn" data-package="৳580 - 850 Diamond">৳580 - 850 Diamond</button>
+    <button class="pkg-btn" data-package="৳760 - 1090 Diamond">৳760 - 1090 Diamond</button>
+    <button class="pkg-btn" data-package="৳840 - 1240 Diamond">৳840 - 1240 Diamond</button>
+    <button class="pkg-btn" data-package="৳1260 - 1850 Diamond">৳1260 - 1850 Diamond</button>
+  </div>
+
+  <div class="section hidden" id="form-section">
+    <label>Your Name:</label>
+    <input type="text" id="name" placeholder="Enter your name">
+
+    <label>Your UID (only numbers):</label>
+    <input type="number" id="uid" placeholder="Enter UID (digits only)">
+
+    <button onclick="showPayment()">Place Order</button>
+  </div>
+
+  <div class="section hidden" id="payment-section">
+    <p><strong>Select Payment Method:</strong></p>
+    <label><input type="radio" name="payment" value="Bkash" onclick="showNumber('bkash')"> Bkash</label>
+    <label><input type="radio" name="payment" value="Nagad" onclick="showNumber('nagad')"> Nagad</label>
+
+    <div id="numberDisplay" class="hidden">
+      <p class="payment-number" id="paymentNumber"></p>
+      <small style="color: red;">Only Send Money (Don't use Cash Out or Payment)</small><br>
+      <button class="copy-btn" onclick="copyNumber()">Copy</button>
+    </div>
+
+    <label>Transaction ID:</label>
+    <input type="text" id="txn" placeholder="Enter Transaction ID">
+
+    <button onclick="submitOrder()">Submit</button>
+  </div>
+
+  <div class="section hidden" id="success-section"></div>
+
+  <script>
+    let selectedPackage = '';
+    const bkashNumber = "01750631170";
+    const nagadNumber = "01842145643";
+
+    // Handle package button clicks
+    document.querySelectorAll('.pkg-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        selectedPackage = btn.dataset.package;
+        document.getElementById('form-section').classList.remove('hidden');
+        document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    function showPayment() {
+      const name = document.getElementById('name').value.trim();
+      const uid = document.getElementById('uid').value.trim();
+
+      if (!name || !uid) {
+        alert('Please enter your name and UID.');
+        return;
+      }
+
+      document.getElementById('payment-section').classList.remove('hidden');
+      document.getElementById('payment-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function showNumber(method) {
+      const number = method === 'bkash' ? bkashNumber : nagadNumber;
+      document.getElementById('paymentNumber').innerText = number;
+      document.getElementById('numberDisplay').classList.remove('hidden');
+    }
+
+    function copyNumber() {
+      const number = document.getElementById('paymentNumber').innerText;
+      navigator.clipboard.writeText(number).then(() => alert('Number copied!'));
+    }
+
+    function submitOrder() {
+      const name = document.getElementById('name').value.trim();
+      const uid = document.getElementById('uid').value.trim();
+      const txn = document.getElementById('txn').value.trim();
+      const payment = document.querySelector('input[name="payment"]:checked');
+
+      if (!name || !uid || !txn || !payment) {
+        alert('Please complete all fields.');
+        return;
+      }
+
+      const message = `
+New FF Diamond Order:
+----------------------------
+Package: ${selectedPackage}
+Name: ${name}
+UID: ${uid}
+Payment Method: ${payment.value}
+Transaction ID: ${txn}
+Time: ${new Date().toLocaleString()}
+`;
+
+      fetch("https://api.telegram.org/bot7693590092:AAGzAAsubXVXckpLRp86L0qfUezcUHkjzBw/sendMessage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: "6593402184",
+          text: message
+        })
+      }).then(res => {
+        if (res.ok) {
+          document.getElementById('package-section').classList.add('hidden');
+          document.getElementById('form-section').classList.add('hidden');
+          document.getElementById('payment-section').classList.add('hidden');
+
+          const success = document.getElementById('success-section');
+          success.classList.remove('hidden');
+          success.innerHTML = `
+            <div class="success">
+              <h2>Success!</h2>
+              <p>Your diamond top-up request has been submitted successfully.</p>
+              <p>Please wait for confirmation.</p>
+            </div>`;
+          success.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          alert('Failed to send order. Please try again.');
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
