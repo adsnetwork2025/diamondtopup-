@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Free Fire Diamond Top Up - Company Owner Hridoy</title>
   <style>
+    /* --- বেসিক স্টাইল --- */
     body {
       font-family: 'Segoe UI', Tahoma, sans-serif;
       max-width: 600px;
       margin: auto;
       padding: 20px;
       background-color: #f4f4f4;
+      color: #333;
     }
 
     h1 {
       text-align: center;
       font-size: 32px;
       margin-bottom: 5px;
+      color: #222;
     }
 
     h3 {
@@ -25,67 +28,188 @@
       margin-bottom: 20px;
     }
 
+    /* --- সেকশন স্টাইল --- */
     .section {
       background: #fff;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
       margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+
+    /* --- প্যাকেজ বাটন ডিজাইন --- */
+    #package-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+    .pkg-btn {
+      flex: 1 1 45%;
+      min-width: 180px;
+      background: linear-gradient(135deg, #007bff, #0056b3);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+      padding: 16px 12px;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(0,123,255,0.3);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+    .pkg-btn::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: rgba(255,255,255,0.15);
+      transform: rotate(25deg);
+      transition: all 0.5s ease;
+      pointer-events: none;
+      opacity: 0;
+    }
+    .pkg-btn:hover::before {
+      opacity: 1;
+      top: -10%;
+      left: -10%;
+    }
+    .pkg-btn:hover {
+      background: linear-gradient(135deg, #0056b3, #007bff);
+      box-shadow: 0 10px 20px rgba(0,86,179,0.6);
+      transform: translateY(-4px);
+    }
+
+    /* --- ইনপুট ও বাটন স্টাইল --- */
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0 20px;
+      border: 1.5px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+    input[type="text"]:focus, input[type="number"]:focus {
+      border-color: #007bff;
+      outline: none;
     }
 
     button, .copy-btn {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       margin: 10px 0;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       background-color: #007bff;
       color: white;
       font-size: 16px;
       cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 5px 12px rgba(0,123,255,0.4);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      user-select: none;
+    }
+    button:hover, .copy-btn:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
     }
 
-    input[type="text"], input[type="number"] {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+    /* --- ব্যাক বাটনের জন্য আলাদা স্টাইল --- */
+    .back-btn {
+      background: #444 !important;
+      box-shadow: 0 5px 12px rgba(68,68,68,0.5) !important;
     }
 
+    /* --- হিডেন ক্লাস --- */
     .hidden {
       display: none;
     }
 
+    /* --- পেমেন্ট নাম্বার স্টাইল --- */
     .payment-number {
       font-weight: bold;
       color: #333;
-      font-size: 16px;
+      font-size: 18px;
+      margin: 12px 0 8px;
+      user-select: all;
     }
 
+    /* --- সাকসেস মেসেজ স্টাইল --- */
     .success {
       text-align: center;
-      padding: 20px;
+      padding: 25px;
       background-color: #e6ffe6;
-      border: 1px solid #00cc00;
-      border-radius: 10px;
+      border: 2px solid #00cc00;
+      border-radius: 12px;
+      font-size: 18px;
+      color: #006600;
+      box-shadow: 0 0 12px #00cc00aa;
     }
 
+    /* --- পেমেন্ট ইনফো --- */
     .amount-info {
-      font-size: 18px;
+      font-size: 20px;
       color: #007bff;
-      font-weight: bold;
-      margin-bottom: 10px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    /* --- রেডিও লেবেল স্পেসিং --- */
+    label {
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* --- ছোট রেডিও স্পেস --- */
+    input[type="radio"] {
+      margin-right: 8px;
+      cursor: pointer;
+      vertical-align: middle;
+    }
+
+    /* --- ছোট নোটিশ লাল কালারে --- */
+    small {
+      color: #d00;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    /* --- বাটন গ্রুপ স্টাইল --- */
+    .btn-group {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .btn-group button {
+      flex: 1;
+    }
+
+    /* --- অ্যানিমেশন --- */
+    .fade-in {
+      animation: fadeIn 0.6s ease forwards;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
     }
   </style>
 </head>
 <body>
-
   <h1>Free Fire Diamond Top Up</h1>
   <h3>Company Owner Hridoy</h3>
 
-  <div class="section" id="package-section">
-    <p><strong>Select a Package:</strong></p>
+  <!-- প্যাকেজ সেকশন -->
+  <div class="section fade-in" id="package-section">
+    <p style="font-weight: 700; font-size: 18px; text-align:center; margin-bottom: 20px;">Select a Package:</p>
     <button class="pkg-btn" data-package="৳45 - 50 Diamond">৳45 - 50 Diamond</button>
     <button class="pkg-btn" data-package="৳100 - 115 Diamond">৳100 - 115 Diamond</button>
     <button class="pkg-btn" data-package="৳180 - 240 Diamond">৳180 - 240 Diamond</button>
@@ -98,38 +222,47 @@
     <button class="pkg-btn" data-package="৳1260 - 1850 Diamond">৳1260 - 1850 Diamond</button>
   </div>
 
-  <div class="section hidden" id="form-section">
+  <!-- ফর্ম সেকশন -->
+  <div class="section hidden fade-in" id="form-section">
     <p class="amount-info">Selected Package: <span id="selectedAmount"></span></p>
 
     <label>Your Name:</label>
-    <input type="text" id="name" placeholder="Enter your name">
+    <input type="text" id="name" placeholder="Enter your name" />
 
     <label>Your UID (only numbers):</label>
-    <input type="number" id="uid" placeholder="Enter UID (digits only)">
+    <input type="number" id="uid" placeholder="Enter UID (digits only)" />
 
-    <button onclick="showPayment()">Place Order</button>
+    <div class="btn-group">
+      <button class="back-btn" onclick="backToPackages()">← Back</button>
+      <button onclick="showPayment()">Place Order</button>
+    </div>
   </div>
 
-  <div class="section hidden" id="payment-section">
+  <!-- পেমেন্ট সেকশন -->
+  <div class="section hidden fade-in" id="payment-section">
     <p class="amount-info">You need to pay: <span id="payAmount"></span></p>
 
     <p><strong>Select Payment Method:</strong></p>
-    <label><input type="radio" name="payment" value="Bkash" onclick="showNumber('bkash')"> Bkash</label><br>
-    <label><input type="radio" name="payment" value="Nagad" onclick="showNumber('nagad')"> Nagad</label>
+    <label><input type="radio" name="payment" value="Bkash" onclick="showNumber('bkash')" /> Bkash</label><br />
+    <label><input type="radio" name="payment" value="Nagad" onclick="showNumber('nagad')" /> Nagad</label>
 
     <div id="numberDisplay" class="hidden">
       <p class="payment-number" id="paymentNumber"></p>
-      <small style="color: red;">Only Send Money (Don't use Cash Out or Payment)</small><br>
+      <small>Only Send Money (Don't use Cash Out or Payment)</small><br />
       <button class="copy-btn" onclick="copyNumber()">Copy</button>
     </div>
 
     <label>Transaction ID:</label>
-    <input type="text" id="txn" placeholder="Enter Transaction ID">
+    <input type="text" id="txn" placeholder="Enter Transaction ID" />
 
-    <button onclick="submitOrder()">Submit</button>
+    <div class="btn-group">
+      <button class="back-btn" onclick="backToForm()">← Back</button>
+      <button onclick="submitOrder()">Submit</button>
+    </div>
   </div>
 
-  <div class="section hidden" id="success-section"></div>
+  <!-- সফলতার মেসেজ -->
+  <div class="section hidden fade-in" id="success-section"></div>
 
   <script>
     let selectedPackage = '';
@@ -137,13 +270,16 @@
     const bkashNumber = "01750631170";
     const nagadNumber = "01842145643";
 
+    // প্যাকেজ বাটনে ক্লিক ইভেন্ট
     document.querySelectorAll('.pkg-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         selectedPackage = btn.dataset.package;
-        selectedAmount = selectedPackage.split(' ')[0]; // Get ৳ amount
+        selectedAmount = selectedPackage.split(' ')[0]; // ৳ অংশটা নিচ্ছে
         document.getElementById('selectedAmount').innerText = selectedPackage;
         document.getElementById('payAmount').innerText = selectedAmount;
 
+        // প্যাকেজ সেকশন লুকাও, ফর্ম শো করো
+        document.getElementById('package-section').classList.add('hidden');
         document.getElementById('form-section').classList.remove('hidden');
         document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
       });
@@ -158,6 +294,8 @@
         return;
       }
 
+      // ফর্ম সেকশন লুকাও, পেমেন্ট সেকশন দেখাও
+      document.getElementById('form-section').classList.add('hidden');
       document.getElementById('payment-section').classList.remove('hidden');
       document.getElementById('payment-section').scrollIntoView({ behavior: 'smooth' });
     }
@@ -220,8 +358,23 @@ Time: ${new Date().toLocaleString()}
         } else {
           alert('Failed to send order. Please try again.');
         }
+      }).catch(() => {
+        alert('Failed to send order. Please try again.');
       });
     }
-  </script>
 
-</
+    // Back বাটন ফাংশনগুলি
+    function backToPackages() {
+      document.getElementById('form-section').classList.add('hidden');
+      document.getElementById('package-section').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function backToForm() {
+      document.getElementById('payment-section').classList.add('hidden');
+      document.getElementById('form-section').classList.remove('hidden');
+      document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
